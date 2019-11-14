@@ -14,7 +14,7 @@ class MyWidget(QMainWindow):
 
     def run(self):
         self.r = choice(list(range(50, 300)))
-        self.x = self.y = 300
+        self.x = self.y = choice(list(range(50, 550)))
         self.paintEvent(self.event)
 
     def paintEvent(self, event):

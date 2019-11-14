@@ -2,26 +2,31 @@ import sys
 from PyQt5 import uic
 from PyQt5.QtGui import QPainter, QColor
 from random import choice
-from ui import Ui_MainWindow
 from PyQt5.QtWidgets import QApplication, QMainWindow
 
 
-class MyWidget(QMainWindow, Ui_MainWindow):
+class MyWidget(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setupUi(self)
+        uic.loadUi('Ui.ui', self)
+        self.x = self.y = self.r = 0
         self.pushButton.clicked.connect(self.run)
+
+    def run(self):
+        self.r = choice(list(range(50, 300)))
+        self.x = self.y = 300
+        self.paintEvent(self.event)
 
     def paintEvent(self, event):
         qp = QPainter()
         qp.begin(self)
-        self.draw_rect(qp)
+        self.draw(qp)
         qp.end()
 
-    def run(self, qp):
+    def draw(self, qp):
         qp.setBrush(QColor(255, 255, 0))
-        r = choice(list(range(50, 300)))
-        qp.drawEllipse(300, 300, r, r)
+        qp.drawEllipse(self.x, self.y, self.r, self.r)
+        self.update()
 
 
 if __name__ == '__main__':
